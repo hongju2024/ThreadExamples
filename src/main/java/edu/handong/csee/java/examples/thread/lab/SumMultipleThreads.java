@@ -31,16 +31,24 @@ public class SumMultipleThreads implements Runnable{
 		for(SumMultipleThreads runner:sumRunners) {
 			Thread thread = new Thread(runner);
 			thread.start();
+			try {
+				thread.join();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			threadsForSubSum.add(thread);
 		}
+		
 
 		long grandTotal = 0;
+
 		for(SumMultipleThreads runner:sumRunners) {
 			grandTotal += runner.totalSum;
 		}
 
 		System.out.println("Grand Total = " + grandTotal);
 	}
+
 
 	@Override
 	public void run() {
